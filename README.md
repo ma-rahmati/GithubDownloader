@@ -1,4 +1,8 @@
 # 📥 GitHub Downloader
+![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-blue?logo=githubactions)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+🌐 Language: [فارسی (Persian)](./README-PER.md)
 
 A GitHub Actions-based downloader that downloads files from URLs and uploads them to **GitHub Releases** with automatic ZIP splitting support for large files.
 
@@ -28,13 +32,23 @@ A GitHub Actions-based downloader that downloads files from URLs and uploads the
 
 ## 🧑‍💻 How to use
 
-### 1. Go to your repository
+⚠️ **Important: You must fork this repository first before using it.**
 
-Open your GitHub repository where the workflow is added.
+### 1. Fork the repository
+
+- Go to the repository on GitHub
+- Click the **Fork** button (top right corner)
+- This creates a copy in your own account
 
 ---
 
-### 2. Open Actions tab
+### 2. Open your forked repository
+
+Navigate to your forked version of this repository.
+
+---
+
+### 3. Open Actions tab
 
 ```
 Actions → Download via GitHub
@@ -42,7 +56,7 @@ Actions → Download via GitHub
 
 ---
 
-### 3. Run workflow
+### 4. Run workflow
 
 Click:
 
