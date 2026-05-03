@@ -1,4 +1,4 @@
-# 📥 GitHub Downloader (By AMiN)
+# 📥 GitHub Downloader
 
 A GitHub Actions-based downloader that downloads files from URLs and uploads them to **GitHub Releases** with automatic ZIP splitting support for large files.
 
@@ -37,7 +37,7 @@ Open your GitHub repository where the workflow is added.
 ### 2. Open Actions tab
 
 ```
-Actions → Download via GitHub (By AMiN)
+Actions → Download via GitHub
 ```
 
 ---
