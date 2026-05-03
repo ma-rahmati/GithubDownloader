@@ -174,3 +174,5 @@ Use responsibly. This is intended for personal or development use only.
 ## 👤 Author
 
 Made with ❤️ by AMiN
+
+Freedom For IRAN
