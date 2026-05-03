@@ -66,11 +66,7 @@ jobs:
               mv "$FILE" "output/$NAME"
             fi
           done
-      - name: Get filename for release name
-        id: get_name
-        run: |
-          FILE=$(ls output | head -n 1)
-          echo "name=$FILE" >> $GITHUB_OUTPUT
+      
       - name: Get release name
         id: get_name
         run: |
