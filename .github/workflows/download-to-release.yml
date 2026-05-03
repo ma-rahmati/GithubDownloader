@@ -1,4 +1,4 @@
-name: Download to Release
+name: Download via GitHub (By AMiN)
 
 on:
   workflow_dispatch:
@@ -10,6 +10,9 @@ on:
         description: 'Split size in MB (max 1900 recommended)'
         required: false
         default: '1900'
+      release_name:
+        description: 'Custom release name (optional)'
+        required: false
 
 jobs:
   release:
@@ -63,13 +66,17 @@ jobs:
               mv "$FILE" "output/$NAME"
             fi
           done
-
+      - name: Get filename for release name
+        id: get_name
+        run: |
+          FILE=$(ls output | head -n 1)
+          echo "name=$FILE" >> $GITHUB_OUTPUT
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: release-${{ github.run_id }}
-          name: Auto Release ${{ github.run_id }}
+          name: name: ${{ github.event.inputs.release_name || steps.get_name.outputs.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
