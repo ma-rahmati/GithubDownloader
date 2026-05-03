@@ -1,4 +1,4 @@
-name: Download via GitHub (By AMiN)
+name: Download via GitHub
 
 on:
   workflow_dispatch:
