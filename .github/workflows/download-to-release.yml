@@ -47,25 +47,21 @@ jobs:
               "$URL"
           done
 
-      - name: Split large files
-        run: |
-          SPLIT_MB=${{ github.event.inputs.split_mb }}
+        - name: Create ZIP (split mode)
+          run: |
+            mkdir -p output
+            SPLIT_MB=${{ github.event.inputs.split_mb }}
 
-          mkdir -p output
+            for FILE in files/*; do
+              [ -f "$FILE" ] || continue
 
-          for FILE in files/*; do
-            [ -f "$FILE" ] || continue
-            SIZE=$(stat -c%s "$FILE")
-            LIMIT=$(( SPLIT_MB * 1024 * 1024 ))
-            NAME=$(basename "$FILE")
+              NAME=$(basename "$FILE")
+              ZIP_NAME="output/${NAME}.zip"
 
-            if [ "$SIZE" -gt "$LIMIT" ]; then
-              echo "Splitting $NAME"
-              split -b ${SPLIT_MB}M "$FILE" "output/${NAME}.part_"
-            else
-              mv "$FILE" "output/$NAME"
-            fi
-          done
+              echo "Zipping + splitting: $NAME"
+
+              zip -0 -s "${SPLIT_MB}m" "$ZIP_NAME" "$FILE"
+            done
       
       - name: Get release name
         id: get_name
