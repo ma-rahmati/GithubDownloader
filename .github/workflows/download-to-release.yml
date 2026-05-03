@@ -1,0 +1,82 @@
+name: Download to Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: 'Space-separated URLs'
+        required: true
+      split_mb:
+        description: 'Split size in MB (max 1900 recommended)'
+        required: false
+        default: '1900'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y aria2 zip
+
+      - name: Download files
+        run: |
+          mkdir -p files
+          URLS="${{ github.event.inputs.urls }}"
+
+          for URL in $URLS; do
+            NAME=$(basename "$URL")
+            echo "Downloading $NAME"
+
+            aria2c \
+              --dir=files \
+              --out="$NAME" \
+              --split=4 \
+              --max-connection-per-server=4 \
+              --continue=true \
+              "$URL"
+          done
+
+      - name: Split large files
+        run: |
+          SPLIT_MB=${{ github.event.inputs.split_mb }}
+
+          mkdir -p output
+
+          for FILE in files/*; do
+            [ -f "$FILE" ] || continue
+            SIZE=$(stat -c%s "$FILE")
+            LIMIT=$(( SPLIT_MB * 1024 * 1024 ))
+            NAME=$(basename "$FILE")
+
+            if [ "$SIZE" -gt "$LIMIT" ]; then
+              echo "Splitting $NAME"
+              split -b ${SPLIT_MB}M "$FILE" "output/${NAME}.part_"
+            else
+              mv "$FILE" "output/$NAME"
+            fi
+          done
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: release-${{ github.run_id }}
+          name: Auto Release ${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload files to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: release-${{ github.run_id }}
+          files: output/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
