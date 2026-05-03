@@ -71,12 +71,18 @@ jobs:
         run: |
           FILE=$(ls output | head -n 1)
           echo "name=$FILE" >> $GITHUB_OUTPUT
-      - name: Create Release
-        id: create_release
+      - name: Get release name
+        id: get_name
+        run: |
+          FILE=$(ls output | head -n 1)
+          echo "name=$FILE" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release + Upload files
         uses: softprops/action-gh-release@v2
         with:
           tag_name: release-${{ github.run_id }}
-          name: name: ${{ github.event.inputs.release_name || steps.get_name.outputs.name }}
+          name: ${{ github.event.inputs.release_name || steps.get_name.outputs.name }}
+          files: output/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
