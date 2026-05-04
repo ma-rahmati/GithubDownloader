@@ -127,12 +127,42 @@ unzip full.zip
 
 ---
 
-## ⚠️ Important Notes
+## 📝 Notes:
 
 * GitHub file limit: ~2GB per file
 * Large files are automatically split
 * Do NOT delete any `.z01`, `.z02` files
 * Release name is optional (auto-generated if empty)
+
+---
+
+## ⚠️ Important note:
+
+GitHub Actions and Releases are intended for software development workflows, not as a general-purpose file hosting solution.
+
+## Misuse may result in:
+
+* Temporary restrictions
+* Disabled Actions
+* Repository limitations
+
+To avoid being flagged for abuse by GitHub, please follow these guidelines:
+
+## 🚫 Avoid the following:
+
+* Using this project as a public file hosting service
+* Running frequent or large downloads continuously
+* Sharing your repository as a public download service
+* Downloading extremely large files repeatedly
+* Automating excessive workflow executions
+
+## ✅ Recommended usage:
+
+* Use for personal or development purposes only
+* Keep usage moderate and reasonable
+* Avoid high-frequency runs in a short time
+* Prefer private repositories if possible
+* Limit number of URLs per run
 
 ---
 
