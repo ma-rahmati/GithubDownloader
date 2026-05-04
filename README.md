@@ -163,6 +163,7 @@ To avoid being flagged for abuse by GitHub, please follow these guidelines:
 * Avoid high-frequency runs in a short time
 * Prefer private repositories if possible
 * Limit number of URLs per run
+* After downloading your files, delete unnecessary assets from Releases
 
 ---
 
